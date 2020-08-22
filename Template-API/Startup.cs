@@ -18,6 +18,8 @@ using System.IO;
 using NLog;
 using Template_API.Contracts;
 using Template_API.Services;
+using AutoMapper;
+using Template_API.Mappings;
 
 namespace Template_API
 {
@@ -47,6 +49,8 @@ namespace Template_API
                     .AllowAnyHeader()
                 );
             });
+
+            services.AddAutoMapper(typeof(Maps));
 
             services.AddSwaggerGen(c => {
                 c.SwaggerDoc("v1", new OpenApiInfo {
