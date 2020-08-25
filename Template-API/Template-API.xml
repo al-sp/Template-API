@@ -44,6 +44,46 @@
             <param name="id"></param>
             <returns></returns>
         </member>
+        <member name="T:Template_API.Controllers.BooksController">
+            <summary>
+            Interacts with the Books
+            </summary>
+        </member>
+        <member name="M:Template_API.Controllers.BooksController.GetBooks">
+            <summary>
+            Get all books
+            </summary>
+            <returns>A List of books</returns>
+        </member>
+        <member name="M:Template_API.Controllers.BooksController.GetBook(System.Int32)">
+            <summary>
+            Get an book by ID
+            </summary>
+            <param name="id">Book ID</param>
+            <returns>A record book</returns>
+        </member>
+        <member name="M:Template_API.Controllers.BooksController.CreateBook(Template_API.DTOs.BookCreateDTO)">
+            <summary>
+            Create an book
+            </summary>
+            <param name="bookDTO">Book</param>
+            <returns></returns>
+        </member>
+        <member name="M:Template_API.Controllers.BooksController.UpdateBook(System.Int32,Template_API.DTOs.BookUpdateDTO)">
+            <summary>
+            Update an book
+            </summary>
+            <param name="id">book id</param>
+            <param name="bookDTO">book</param>
+            <returns></returns>
+        </member>
+        <member name="M:Template_API.Controllers.BooksController.DeleteBook(System.Int32)">
+            <summary>
+            Delete an book
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
         <member name="T:Dev_API.Controllers.HomeController">
             <summary>
             This is a test API controller
