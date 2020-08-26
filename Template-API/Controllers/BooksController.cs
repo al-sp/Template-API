@@ -89,7 +89,7 @@ namespace Template_API.Controllers
 
                 if (book == null)
                 {
-                    _logger.LogWarn($"{location}: Book with id: {id} was not found");
+                    _logger.LogWarn($"{location}: Record with id: {id} was not found");
                     return NotFound();
                 }
 
@@ -126,7 +126,7 @@ namespace Template_API.Controllers
 
                 if (!ModelState.IsValid)
                 {
-                    _logger.LogWarn($"{location}: Book Data was incomplite");
+                    _logger.LogWarn($"{location}: Record Data was incomplite");
                     return BadRequest(ModelState);
                 }
 
@@ -135,7 +135,7 @@ namespace Template_API.Controllers
 
                 if (!isSuccess)
                 {
-                    return InternalError($"{location}: Failed to create book");
+                    return InternalError($"{location}: Failed to create record");
                 }
 
                 return Created("Create", new { book });
@@ -174,13 +174,13 @@ namespace Template_API.Controllers
 
                 if (!isExists)
                 {
-                    _logger.LogWarn($"{location}: Book with id: {id} was not found");
+                    _logger.LogWarn($"{location}: Record with id: {id} was not found");
                     return NotFound();
                 }
 
                 if (!ModelState.IsValid)
                 {
-                    _logger.LogWarn($"{location}: Book Data was incomplite");
+                    _logger.LogWarn($"{location}: Data was incomplite");
                     return BadRequest(ModelState);
                 }
 
@@ -189,7 +189,7 @@ namespace Template_API.Controllers
 
                 if (!isSuccess)
                 {
-                    return InternalError($"{location}: Failed to update book");
+                    return InternalError($"{location}: Failed to update record");
                 }
 
                 return NoContent();
@@ -227,7 +227,7 @@ namespace Template_API.Controllers
 
                 if (!isExists)
                 {
-                    _logger.LogWarn($"{location}: Book with id: {id} was not found");
+                    _logger.LogWarn($"{location}: Record with id: {id} was not found");
                     return NotFound();
                 }
 
@@ -236,7 +236,7 @@ namespace Template_API.Controllers
 
                 if (!isSuccess)
                 {
-                    return InternalError($"{location}: Failed to delete book");
+                    return InternalError($"{location}: Failed to delete record");
                 }
 
                 return NoContent();

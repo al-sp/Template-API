@@ -88,7 +88,7 @@ namespace Template_API.Controllers
 
                 if (author == null)
                 {
-                    _logger.LogWarn($"Author with id: {id} was not found");
+                    _logger.LogWarn($"Record with id: {id} was not found");
                     return NotFound();
                 }
 
@@ -119,13 +119,13 @@ namespace Template_API.Controllers
 
                 if (authorDTO == null)
                 {
-                    _logger.LogWarn($"{location}: Empty Request was submitted");
+                    _logger.LogWarn($"{location}: Empty request was submitted");
                     return BadRequest(ModelState);
                 }
 
                 if (!ModelState.IsValid)
                 {
-                    _logger.LogWarn($"{location}: Author Data was incomplite");
+                    _logger.LogWarn($"{location}: Data was incomplite");
                     return BadRequest(ModelState);
                 }
 
@@ -134,7 +134,7 @@ namespace Template_API.Controllers
 
                 if (!isSuccess)
                 {
-                    return InternalError($"{location}: Failed to create author");
+                    return InternalError($"{location}: Failed to create record");
                 }
 
                 return Created("Create", new { author });
@@ -165,7 +165,7 @@ namespace Template_API.Controllers
 
                 if (id < 1 || authorDTO == null || id != authorDTO.Id)
                 {
-                    _logger.LogWarn($"{location}: Empty Request was submitted");
+                    _logger.LogWarn($"{location}: Empty request was submitted");
                     return BadRequest(ModelState);
                 }
 
@@ -173,13 +173,13 @@ namespace Template_API.Controllers
 
                 if (!isExists)
                 {
-                    _logger.LogWarn($"{location}: Author with id: {id} was not found");
+                    _logger.LogWarn($"{location}: Record with id: {id} was not found");
                     return NotFound();
                 }
 
                 if (!ModelState.IsValid)
                 {
-                    _logger.LogWarn($"{location}: Author Data was incomplite");
+                    _logger.LogWarn($"{location}: Data was incomplite");
                     return BadRequest(ModelState);
                 }
 
@@ -188,7 +188,7 @@ namespace Template_API.Controllers
 
                 if (!isSuccess)
                 {
-                    return InternalError($"{location}: Failed to update author");
+                    return InternalError($"{location}: Failed to update record");
                 }
 
                 return NoContent();
@@ -218,7 +218,7 @@ namespace Template_API.Controllers
 
                 if (id < 1)
                 {
-                    _logger.LogWarn($"{location}: Empty Request was submitted");
+                    _logger.LogWarn($"{location}: Empty request was submitted");
                     return BadRequest(ModelState);
                 }
 
@@ -226,7 +226,7 @@ namespace Template_API.Controllers
 
                 if (!isExists)
                 {
-                    _logger.LogWarn($"{location}: Author with id: {id} was not found");
+                    _logger.LogWarn($"{location}: Record with id: {id} was not found");
                     return NotFound();
                 }
 
@@ -235,7 +235,7 @@ namespace Template_API.Controllers
 
                 if (!isSuccess)
                 {
-                    return InternalError($"{location}: Failed to delete author");
+                    return InternalError($"{location}: Failed to delete record");
                 }
 
                 return NoContent();
