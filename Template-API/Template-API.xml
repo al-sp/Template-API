@@ -84,22 +84,11 @@
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="T:Dev_API.Controllers.HomeController">
+        <member name="M:Template_API.Controllers.UsersController.Login(Template_API.DTOs.UserDTO)">
             <summary>
-            This is a test API controller
+            User login endpoint
             </summary>
-        </member>
-        <member name="M:Dev_API.Controllers.HomeController.Get">
-            <summary>
-            Gets Values
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Dev_API.Controllers.HomeController.Get(System.Int32)">
-            <summary>
-            Get a Values
-            </summary>
-            <param name="id"></param>
+            <param name="userDTO"></param>
             <returns></returns>
         </member>
     </members>
