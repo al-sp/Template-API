@@ -53,11 +53,53 @@ namespace Template_API.Controllers
         }
 
         /// <summary>
+        /// User register endpoint
+        /// </summary>
+        /// <param name="userDTO"></param>
+        /// <returns></returns>
+        [Route("register")]
+        [HttpPost]
+        [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+
+        public async Task<IActionResult> Register([FromBody] UserDTO userDTO)
+        {
+            var location = GetControllerActionNames();
+            try
+            {
+                _logger.LogInfo($"{location}: Attempted call");
+                var userName = userDTO.Email;
+                var password = userDTO.Password;
+                var user = new IdentityUser { Email = userName, UserName = userName };
+                var result = await _userManager.CreateAsync(user, password);
+
+                if (!result.Succeeded)
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        _logger.LogInfo($"{location}: {error.Code} {error.Description}");
+                    }
+                    return InternalError($"{location}: {userName} Registration attempt failed");
+                }
+                await _userManager.AddToRoleAsync(user, "Customer");
+
+                return Created("Create", new { result.Succeeded });
+            }
+            catch (Exception e)
+            {
+                return InternalError($"{location}: {e.Message} - {e.InnerException}");
+            }
+        }
+
+        /// <summary>
         /// User login endpoint
         /// </summary>
         /// <param name="userDTO"></param>
         /// <returns></returns>
+        [Route("login")]
         [HttpPost]
+        [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> Login([FromBody] UserDTO userDTO)
@@ -66,7 +108,7 @@ namespace Template_API.Controllers
             try
             {
                 _logger.LogInfo($"{location}: Attempted call");
-                var userName = userDTO.UserName;
+                var userName = userDTO.Email;
                 var password = userDTO.Password;
                 var result = await _signInManager.PasswordSignInAsync(userName, password, false, false);
 

@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30406.217
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template-API", "Template-API\Template-API.csproj", "{93C975F8-2C43-4A74-BC43-E33E3337D342}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Template-API", "Template-API\Template-API.csproj", "{93C975F8-2C43-4A74-BC43-E33E3337D342}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Template-UI", "Template-UI\Template-UI.csproj", "{3C353578-B65F-4EC5-92FE-CB440219270C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{93C975F8-2C43-4A74-BC43-E33E3337D342}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{93C975F8-2C43-4A74-BC43-E33E3337D342}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{93C975F8-2C43-4A74-BC43-E33E3337D342}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C353578-B65F-4EC5-92FE-CB440219270C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C353578-B65F-4EC5-92FE-CB440219270C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C353578-B65F-4EC5-92FE-CB440219270C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C353578-B65F-4EC5-92FE-CB440219270C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

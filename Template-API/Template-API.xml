@@ -84,6 +84,13 @@
             <param name="id"></param>
             <returns></returns>
         </member>
+        <member name="M:Template_API.Controllers.UsersController.Register(Template_API.DTOs.UserDTO)">
+            <summary>
+            User register endpoint
+            </summary>
+            <param name="userDTO"></param>
+            <returns></returns>
+        </member>
         <member name="M:Template_API.Controllers.UsersController.Login(Template_API.DTOs.UserDTO)">
             <summary>
             User login endpoint
