@@ -1,9 +1,11 @@
-﻿using Newtonsoft.Json;
+﻿using Blazored.LocalStorage;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
@@ -14,23 +16,29 @@ namespace Template_UI.Service
     public class BaseRepository<T> : IBaseRepository<T> where T : class
     {
         private readonly IHttpClientFactory _httpClient;
-        public BaseRepository(IHttpClientFactory httpClient)
+        private readonly ILocalStorageService _localStorage;
+        public BaseRepository(
+            IHttpClientFactory httpClient,
+            ILocalStorageService localStorage
+            )
         {
             _httpClient = httpClient;
+            _localStorage = localStorage;
         }
 
         public async Task<bool> Create(string url, T obj)
         {
             if (obj == null)
             {
-                return false;
+                return true;
             }
 
             var request = new HttpRequestMessage(HttpMethod.Post, url);
 
-            request.Content = new StringContent(JsonConvert.SerializeObject(obj));
+            request.Content = new StringContent(JsonConvert.SerializeObject(obj), Encoding.UTF8, "application/json");
 
             var client = _httpClient.CreateClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", await GetBearerToken());
 
             HttpResponseMessage response = await client.SendAsync(request);
 
@@ -53,6 +61,7 @@ namespace Template_UI.Service
 
             var requset = new HttpRequestMessage(HttpMethod.Delete, url + id);
             var client = _httpClient.CreateClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", await GetBearerToken());
             HttpResponseMessage response = await client.SendAsync(requset);
 
             if(response.StatusCode == System.Net.HttpStatusCode.NoContent)
@@ -74,6 +83,8 @@ namespace Template_UI.Service
 
             var request = new HttpRequestMessage(HttpMethod.Get, url + id);
             var client = _httpClient.CreateClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", await GetBearerToken());
+
             HttpResponseMessage response = await client.SendAsync(request);
 
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
@@ -91,6 +102,8 @@ namespace Template_UI.Service
         {
             var request = new HttpRequestMessage(HttpMethod.Get, url);
             var client = _httpClient.CreateClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", await GetBearerToken());
+
             HttpResponseMessage response = await client.SendAsync(request);
 
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
@@ -104,14 +117,14 @@ namespace Template_UI.Service
             }
         }
 
-        public async Task<bool> Update(string url, T obj)
+        public async Task<bool> Update(string url, T obj, int id)
         {
-            if (obj == null)
+            if (obj == null || id < 0)
             {
                 return false;
             }
 
-            var request = new HttpRequestMessage(HttpMethod.Put, url);
+            var request = new HttpRequestMessage(HttpMethod.Put, url + id);
             request.Content = new StringContent(
                 JsonConvert.SerializeObject(obj), 
                 Encoding.UTF8, 
@@ -119,6 +132,8 @@ namespace Template_UI.Service
                 );
 
             var client = _httpClient.CreateClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", await GetBearerToken());
+
             HttpResponseMessage responce = await client.SendAsync(request);
 
             if (responce.StatusCode == System.Net.HttpStatusCode.NoContent)
@@ -129,6 +144,11 @@ namespace Template_UI.Service
             {
                 return false;
             }
+        }
+
+        private async Task<string> GetBearerToken()
+        {
+            return await _localStorage.GetItemAsync<string>("authToken");
         }
     }
 }

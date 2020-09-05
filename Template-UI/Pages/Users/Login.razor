@@ -1,50 +1,44 @@
 ﻿@page "/login"
 
-@using Template_UI.Models
-@using Template_UI.Contracts
-
 @inject IAuthenticationRepository _authRepo
 @inject NavigationManager _navManager
 
-<div class="card">
-    <h3 class="card-title">Login</h3>
-    @if (response == false)
-    {
-        <div class="alert alert-danger">
-            <p>Something went wrong with the login attempt</p>
+<h3 class="card-title">Login</h3>
+@if (!response)
+{
+    <ErrorMessage Message="Something went wrong with the login attempt" />
+}
+
+<div class="card-body">
+    <EditForm Model="Model" OnValidSubmit="HandleLogin">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <div class="form-group">
+            <label for="email">Email Address</label>
+            <InputText Id="email" class="form-control" @bind-Value="Model.Email" />
+            <ValidationMessage For="@(() => Model.Email)" />
         </div>
-    }
-    <div class="card-body">
-        <EditForm Model="Model" OnValidSubmit="HandleLogin">
-            <DataAnnotationsValidator />
-            <ValidationSummary />
-            <div class="form-group">
-                <label for="email">Email Address</label>
-                <InputText Id="email" class="form-control" @bind-Value="Model.Email" />
-                <ValidationMessage For="@(() => Model.Email)" />
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <InputText Id="password" type="password" class="form-control" @bind-Value="Model.Password" />
-                <ValidationMessage For="@(() => Model.Password)" />
-            </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <InputText Id="password" type="password" class="form-control" @bind-Value="Model.Password" />
+            <ValidationMessage For="@(() => Model.Password)" />
+        </div>
 
-            <button type="submit" class="btn btn-primary btn-block">Login </button>
+        <button type="submit" class="btn btn-primary btn-block">Login </button>
 
-        </EditForm>
-    </div>
+    </EditForm>
 </div>
 
 
 @code {
     private LoginModel Model = new LoginModel();
-    bool? response = null;
+    bool response = true;
 
     private async Task HandleLogin()
     {
         response = await _authRepo.Login(Model);
 
-        if (response == true)
+        if (response)
         {
             _navManager.NavigateTo("/");
         }
