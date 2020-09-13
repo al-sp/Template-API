@@ -1,7 +1,9 @@
 ﻿@page "/authors/delete/{Id}"
 @attribute [Authorize(Roles = "Administrator")]
+
 @inject IAuthorRepository _repo
 @inject NavigationManager _navigation
+
 
 <h3 class="card-title">Are You Sure You Want to Delete This Record?</h3>
 <hr />

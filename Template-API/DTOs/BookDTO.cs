@@ -40,6 +40,7 @@ namespace Template_API.DTOs
         public int Id { get; set; }
         [Required]
         public string Title { get; set; }
+        public string ISBN { get; set; }
         public int? Year { get; set; }
         [StringLength(150)]
         public string Summary { get; set; }

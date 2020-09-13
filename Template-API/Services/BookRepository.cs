@@ -30,13 +30,17 @@ namespace Template_API.Services
 
         public async Task<IList<Book>> FindAll()
         {
-            List<Book> books = await _db.Books.ToListAsync();
+            List<Book> books = await _db.Books
+                .Include(q => q.Author)
+                .ToListAsync();
             return books;
         }
 
         public async Task<Book> FindById(int id)
         {
-            Book book = await _db.Books.FindAsync(id);
+            Book book = await _db.Books
+                .Include(q => q.Author)
+                .FirstOrDefaultAsync(q => q.Id == id);
             return book;
         }
 
