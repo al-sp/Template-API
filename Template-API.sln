@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Template-API", "Template-AP
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Template-UI", "Template-UI\Template-UI.csproj", "{3C353578-B65F-4EC5-92FE-CB440219270C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template-UI-WASM", "Template-UI-WASM\Template-UI-WASM.csproj", "{13712BDD-C4D3-4296-A896-01AAEC21C5B9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{3C353578-B65F-4EC5-92FE-CB440219270C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3C353578-B65F-4EC5-92FE-CB440219270C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3C353578-B65F-4EC5-92FE-CB440219270C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13712BDD-C4D3-4296-A896-01AAEC21C5B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13712BDD-C4D3-4296-A896-01AAEC21C5B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13712BDD-C4D3-4296-A896-01AAEC21C5B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13712BDD-C4D3-4296-A896-01AAEC21C5B9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

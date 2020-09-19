@@ -15,6 +15,7 @@ namespace Template_API.DTOs
         public string Summary { get; set; }
         public string Image { get; set; }
         public decimal? Price { get; set; }
+        public string File { get; set; }
         public int? AuthorId { get; set; }
         public virtual AuthorDTO Author { get; set; }
     }
@@ -32,6 +33,7 @@ namespace Template_API.DTOs
         public decimal? Price { get; set; }
         [Required]
         public int AuthorId { get; set; }
+        public string File { get; set; }
     }
 
     public class BookUpdateDTO
@@ -47,5 +49,6 @@ namespace Template_API.DTOs
         public string Image { get; set; }
         public decimal? Price { get; set; }
         public int? AuthorId { get; set; }
+        public string File { get; set; }
     }
 }

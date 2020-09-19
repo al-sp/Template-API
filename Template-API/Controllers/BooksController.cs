@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Template_API.Contracts;
@@ -23,17 +24,22 @@ namespace Template_API.Controllers
         private readonly IBookRepository _bookRepository;
         private readonly ILoggerService _logger;
         private readonly IMapper _mapper;
+        private readonly IWebHostEnvironment _env;
 
         public BooksController(
             IBookRepository bookRepository,
             ILoggerService logger,
-            IMapper mapper
+            IMapper mapper,
+            IWebHostEnvironment env
             )
         {
             _bookRepository = bookRepository;
             _logger = logger;
             _mapper = mapper;
+            _env = env;
         }
+
+        private string GetImagePath(string fileName) => ($"{_env.ContentRootPath}\\uploads\\{fileName}");
 
         private string GetControllerActionNames()
         {
@@ -63,6 +69,20 @@ namespace Template_API.Controllers
                 _logger.LogInfo($"{location}: Attempted call");
                 IList<Book> books = await _bookRepository.FindAll();
                 var response = _mapper.Map<IList<BookDTO>>(books);
+
+                foreach (var item in response)
+                {
+                    if (!string.IsNullOrEmpty(item.Image))
+                    {
+                        var imgPath = GetImagePath(item.Image);
+                        if (System.IO.File.Exists(imgPath))
+                        {
+                            byte[] imgBytes = System.IO.File.ReadAllBytes(imgPath);
+                            item.File = Convert.ToBase64String(imgBytes);
+                        }
+                    }
+                }
+
                 return Ok(response);
             }
             catch (Exception e)
@@ -96,6 +116,17 @@ namespace Template_API.Controllers
                 }
 
                 var response = _mapper.Map<BookDTO>(book);
+
+                if (!string.IsNullOrEmpty(response.Image))
+                {
+                    var imgPath = GetImagePath(book.Image);
+                    if (System.IO.File.Exists(imgPath))
+                    {
+                        byte[] imgByte = System.IO.File.ReadAllBytes(imgPath);
+                        response.File = Convert.ToBase64String(imgByte);
+                    }
+                }
+
                 return Ok(response);
             }
             catch (Exception e)
@@ -139,6 +170,13 @@ namespace Template_API.Controllers
                 if (!isSuccess)
                 {
                     return InternalError($"{location}: Failed to create record");
+                }
+
+                if(!string.IsNullOrEmpty(bookDTO.File))
+                {
+                    var imgPath = GetImagePath(bookDTO.Image);
+                    byte[] imageBytes = Convert.FromBase64String(bookDTO.File);
+                    System.IO.File.WriteAllBytes(imgPath, imageBytes);
                 }
 
                 return Created("Create", new { book });
@@ -188,12 +226,27 @@ namespace Template_API.Controllers
                     return BadRequest(ModelState);
                 }
 
+                var oldImage = await _bookRepository.GetImageFileName(id);
                 var book = _mapper.Map<Book>(bookDTO);
                 var isSuccess = await _bookRepository.Update(book);
 
                 if (!isSuccess)
                 {
                     return InternalError($"{location}: Failed to update record");
+                }
+
+                if (!bookDTO.Image.Equals(oldImage))
+                {
+                    if (System.IO.File.Exists(GetImagePath(oldImage))) 
+                    {
+                        System.IO.File.Delete(GetImagePath(oldImage));
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(bookDTO.File))
+                {
+                    byte[] imageBytes = Convert.FromBase64String(bookDTO.File);
+                    System.IO.File.WriteAllBytes(GetImagePath(bookDTO.Image), imageBytes);
                 }
 
                 return NoContent();

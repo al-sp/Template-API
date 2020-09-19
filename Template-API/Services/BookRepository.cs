@@ -44,6 +44,14 @@ namespace Template_API.Services
             return book;
         }
 
+        public async Task<string> GetImageFileName(int id)
+        {
+            Book book = await _db.Books
+                .AsNoTracking()
+                .FirstOrDefaultAsync(q => q.Id == id);
+            return book.Image;
+        }
+
         public async Task<bool> IsExists(int id)
         {
             bool isExists = await _db.Books.AnyAsync(q => q.Id == id);
