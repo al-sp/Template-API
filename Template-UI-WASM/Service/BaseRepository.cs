@@ -97,7 +97,7 @@ namespace Template_UI_WASM.Service
             }
 
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", await GetBearerToken());
-            HttpResponseMessage responce = await _httpClient.PostAsJsonAsync<T>(url + id, obj);
+            HttpResponseMessage responce = await _httpClient.PutAsJsonAsync<T>(url + id, obj);
 
             if (responce.StatusCode == System.Net.HttpStatusCode.NoContent)
             {
